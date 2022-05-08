@@ -1,58 +1,65 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DraggableItem from '../draggableItem/DraggableItem';
 import './sourceList.scss'
 
-const SourceList = () => {
+const SourceList = ({letters, handleLetters, refs, throwPositions, solvedRight, solvedWrong}) => {
+  const [statePositions, setStatePositions] = useState([])
+  const [contPos, setContPos] = useState({})
 
-  const [letterPositions, setLetterPositions] = useState([
-    {taken: false, pos: {x: 100, y: -70}},
-    {taken: false, pos: {x: 200, y: -70}},
-    {taken: false, pos: {x: 300, y: -70}},
-    {taken: true, pos: {x: 100, y: 0}},
-    {taken: true, pos: {x: 200, y: 0}},
-    {taken: true, pos: {x: 300, y: 0}},
-  ])
-
-  const [letters, setLetters] = useState([
-    {text: 'A', position: {x: 100, y: 0}},
-    {text: 'B', position: {x: 200, y: 0}},
-    {text: 'C', position: {x: 300, y: 0}}
-  ])
-
-  const setPosition = (e, data, letter) => {
-    console.group('drag end')
-    console.log(data.x)
-    console.log(data.y)
-    console.log(letter)
-    console.groupEnd()
-
-    const index = letters.findIndex(el => el.text === letter)
-
-    letterPositions.forEach(letter => {
-      const diffX = Math.abs(letter.pos.x - data.x)
-      const diffY = Math.abs(letter.pos.y - data.y)
-      if (diffX < 20 && diffY < 20) {
-        setLetters(prev => {
-          const newState = [...prev]
-          newState[index].position = {x: letter.pos.x, y: letter.pos.y}
-          return newState
-        })
-      }
-      
-    })
-
+  const setPosition = (e, data, id) => {
+    const nodeX = data.node.getBoundingClientRect().x
+    const nodeY = data.node.getBoundingClientRect().y
     
+    refs.forEach(ref => {
+      const diffX = Math.abs(ref.x - nodeX)
+      const diffY = Math.abs(ref.y - nodeY)
+      if (diffX < 25 && diffY < 25) {
+        let exist = false
+        statePositions.forEach(pos => {
+          if (pos.x === ref.x && pos.y === ref.y) {
+            exist = true
+          }
+        })
+        if (!exist) {
+          setStatePositions(prev => {
+            const newState = [...prev]
+            newState[id] = {x: ref.x, y: ref.y}
+            return newState
+          })
+          handleLetters(id, {x: ref.x, y: ref.y})
+        }
+      }
+    })  
   }
 
+  const sourceList = useRef(null)
+  useEffect(() => {
+    setContPos({x: sourceList.current.getBoundingClientRect().x, y: sourceList.current.getBoundingClientRect().y})
+  }, [])
+
+  useEffect(() => {
+    setStatePositions([])
+    for (let i = refs.length / 2; i < refs.length; i++) {
+      setStatePositions(prev => [...prev, refs[i]])
+    }
+  }, [refs, throwPositions])
+
+  console.group('render source list')
+  console.log(refs)
+  console.groupEnd()
+
   return (
-    <div className='source-list'>
+    <div className='source-list' ref={sourceList}>
       {letters.map((letter, i) => {
-        return <DraggableItem 
-          key={i} 
-          style={{position: 'absolute'}}
-          letter={letter.text} 
-          position={letter.position} 
-          setPosition={setPosition} />
+        return <DraggableItem
+          key={letter.id}
+          solvedRight={solvedRight}
+          solvedWrong={solvedWrong}
+          id={letter.id}
+          text={letter.text}
+          position={statePositions.length > 0 ? {x: statePositions[i].x - contPos.x, y: statePositions[i].y - contPos.y} : null}
+          setPosition={setPosition}
+          />
       })}
       
     </div>

@@ -1,26 +1,13 @@
 import React from 'react';
+import FixedItem from '../fixedItem/FixedItem';
 import './targetList.scss'
 
-const TargetList = () => {
-
-  const positions = [
-    {x: 100, y: 0},
-    {x: 200, y: 0},
-    {x: 300, y: 0},
-  ]
+const TargetList = ({letters, getCoors}) => {
 
   return (
     <div className='target-list'>
-      {positions.map((position, i) => {
-        return (
-          <div
-            key={i}
-            className='target-list__item'
-            style={{left: position.x}}
-          >
-
-          </div>
-        )
+      {letters.map((letter, i) => {
+        return <FixedItem key={i} getCoors={getCoors}/>
       })}
     </div>
   );

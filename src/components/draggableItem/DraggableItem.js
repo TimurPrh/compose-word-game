@@ -1,18 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import Draggable from 'react-draggable';
 import './draggableItem.scss'
 
-const DraggableItem = ({letter, position, setPosition, getCoors}) => {
+const DraggableItem = ({id, text, position, setPosition, solvedRight, solvedWrong}) => {
 
-  // const [position, setPosition] = useState({x: 10, y:10})
-
-  const ref = useRef(null)
-
-  useEffect(() => {
-    console.group('get coors')
-    console.log(ref.current)
-    console.groupEnd()
-  }, [])
+  let className = 'handle'
+  if (solvedWrong) {
+    className += ' handle_not-solved'
+  }
+  if (solvedRight) {
+    className += ' handle_solved'
+  }
 
   const handleStart = (e, data) => {
 
@@ -23,25 +21,20 @@ const DraggableItem = ({letter, position, setPosition, getCoors}) => {
   }
 
   const handleStop = (e, data) => {
-    setPosition(e, data, letter)
+    setPosition(e, data, id)
   }
 
   return (
     <Draggable
-        // axis="x"
-        ref={ref}
         handle=".handle"
-        defaultPosition={{x: 0, y: 0}}
-        // position={null}
         position={position}
         grid={[1, 1]}
         scale={1}
         onStart={handleStart}
         onDrag={handleDrag}
-        onStop={handleStop}
-        >
+        onStop={handleStop}>
         <div>
-          <div className="handle">{letter}</div>
+          <div className={className}>{text}</div>
         </div>
       </Draggable>
   );
