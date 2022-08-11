@@ -2,17 +2,21 @@ import React, { useEffect, useState } from 'react';
 import SourceList from './components/sourceList/SourceList';
 import PlaceList from './components/placeList/PlaceList';
 import Header from './components/Header/Header';
+import LanguageList from './components/languageList/LanguageList';
 import iconsNames from './icons.json';
+import appTexts from './texts.json';
 import './App.scss';
 
 const App = () => {
   const [letters, setLetters] = useState([])
   const [refs, setRefs] = useState([])
   const [mainWord, setMainWord] = useState({})
+  const [mainWordText, setMainWordText] = useState('')
   const [throwPositions, setThrowPositions] = useState(false)
   const [solvedRight, setSolvedRight] = useState(false)
   const [solvedWrong, setSolvedWrong] = useState(false)
   const [solvedWords, setSolvedWords] = useState([])
+  const [selectedLanguage, setSelectedLanguage] = useState('en')
 
   const getRef = (ref) => {
     setRefs(prev => {
@@ -42,8 +46,8 @@ const App = () => {
   const setRandomLetters = () => {
     let wordArray
     do {
-      wordArray = getRandomArray(mainWord.word.toUpperCase().split(''))
-    } while (wordArray.join('') === mainWord.word.toUpperCase());
+      wordArray = getRandomArray(mainWord.word[selectedLanguage].toUpperCase().split(''))
+    } while (wordArray.join('') === mainWord.word[selectedLanguage].toUpperCase());
     
     const newState = []
     wordArray.forEach((letter, i) => {
@@ -70,11 +74,11 @@ const App = () => {
 
   const handleSetMainWord = () => {
     if (solvedWords.length >= iconsNames.icons.length) {
-      alert('слова закончились')
+      alert(appTexts[selectedLanguage].over)
     } else {
       let index = Math.round(Math.random() * (iconsNames.icons.length - 1))
     
-      while (solvedWords.indexOf(iconsNames.icons[index].word) !== -1) {
+      while (solvedWords.indexOf(iconsNames.icons[index].word.en) !== -1) {
         if (index >= iconsNames.icons.length - 1) {
           index = 0
         } else {
@@ -83,6 +87,7 @@ const App = () => {
       }
 
       setMainWord(iconsNames.icons[index])
+      setMainWordText(iconsNames.icons[index].word[selectedLanguage])
     }
 
     setRefs([])
@@ -96,14 +101,22 @@ const App = () => {
   }
 
   useEffect(() => {
-    if (mainWord.word) {
+    if (mainWord.file) {
       setRandomLetters()
     }
-  }, [mainWord])
+  }, [mainWordText])
 
   useEffect(() => {
     handleSetMainWord()
   }, [])
+
+  useEffect(() => {
+    if (mainWord.file) {
+      setRefs([])
+      setLetters([])
+      setMainWordText(mainWord.word[selectedLanguage])
+    }
+  }, [selectedLanguage])
 
   useEffect(() => {
     let completed = true
@@ -120,28 +133,35 @@ const App = () => {
       const sorted = letters.map(i => i).sort((a, b) => a.pos.x - b.pos.x)
       const word = sorted.map(letter => letter.text).join('')
       
-      if (word === mainWord.word.toUpperCase()) {
-        setSolvedWords(prev => [...prev, mainWord.word])
+      if (word === mainWord.word[selectedLanguage].toUpperCase()) {
+        setSolvedWords(prev => [...prev, mainWord.word.en])
         setSolvedRight(true)
       } else {
         setSolvedWrong(true)
       }
     }
-  }, [letters])
+  }, [letters, selectedLanguage])
 
   return (
     <div className='container'>
       <div className='wrapper'>
+        <div className='upper-line'>
+          <LanguageList 
+            selectedLanguage={selectedLanguage} 
+            setSelectedLanguage={setSelectedLanguage}/>
+        </div>
         <Header 
           img={mainWord ? mainWord.file : null} 
           nextWord={handleSetMainWord}
           resetWord={resetWord}
-          solvedRight={!solvedRight}/>
+          solvedRight={!solvedRight}
+          texts={appTexts[selectedLanguage]}/>
         <PlaceList 
           solvedRight={solvedRight} 
           solvedWrong={solvedWrong} 
           letters={letters} 
-          getRef={getRef}/>
+          getRef={getRef}
+          throwPositions={throwPositions}/>
         {
           refs.length > 0 ?
           <SourceList 
@@ -155,6 +175,7 @@ const App = () => {
           null
         }
       </div>
+      
     </div>
   );
 };

@@ -12,14 +12,6 @@ const DraggableItem = ({id, text, position, setPosition, solvedRight, solvedWron
     className += ' handle_solved'
   }
 
-  const handleStart = (e, data) => {
-
-  }
-
-  const handleDrag = (e, data) => {
-    // console.log(data.y)
-  }
-
   const handleStop = (e, data) => {
     setPosition(e, data, id)
   }
@@ -30,8 +22,6 @@ const DraggableItem = ({id, text, position, setPosition, solvedRight, solvedWron
         position={position}
         grid={[1, 1]}
         scale={1}
-        onStart={handleStart}
-        onDrag={handleDrag}
         onStop={handleStop}>
         <div>
           <div className={className}>{text}</div>

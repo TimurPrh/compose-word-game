@@ -13,7 +13,7 @@ const FixedItem = ({ getRef }) => {
       ref={ref}
       className='place-list__item'
     >
-
+      
     </div>
   );
 };

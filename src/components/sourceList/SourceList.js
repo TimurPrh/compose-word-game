@@ -44,10 +44,6 @@ const SourceList = ({letters, handleLetters, refs, throwPositions, solvedRight, 
     }
   }, [refs, throwPositions])
 
-  console.group('render source list')
-  console.log(refs)
-  console.groupEnd()
-
   return (
     <div className='source-list' ref={sourceList}>
       {letters.map((letter, i) => {

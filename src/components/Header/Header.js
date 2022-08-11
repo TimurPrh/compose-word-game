@@ -1,11 +1,11 @@
 import React from 'react';
 import './header.scss'
 
-const Header = ({img, nextWord, resetWord, solvedRight}) => {
+const Header = ({img, nextWord, resetWord, solvedRight, texts}) => {
   return (
     
     <div className='header'>
-      <h1 className='header__label'>Собери слово</h1>
+      <h1 className='header__label'>{texts.header}</h1>
       <div className='header__wrapper'>
         <div className='header__img'>
           <img src={`/icons/${img}.svg`} alt={img}/>
@@ -14,13 +14,13 @@ const Header = ({img, nextWord, resetWord, solvedRight}) => {
           <button 
             onClick={resetWord}
             className='header__button'>
-            Сброс
+            {texts.resetBtn}
           </button>
           <button 
             disabled={solvedRight}
             onClick={nextWord}
             className='header__button header__button_filed'>
-            Следующее слово
+            {texts.nextBtn}
           </button>
         </div>
       </div>

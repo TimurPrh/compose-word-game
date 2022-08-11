@@ -1,0 +1,14 @@
+{
+  "ru": {
+    "header": "Собери слово",
+    "resetBtn": "Сброс",
+    "nextBtn": "Следующее слово",
+    "over": "слова закончились"
+  },
+  "en": {
+    "header": "Compose the word",
+    "resetBtn": "Reset",
+    "nextBtn": "Next word",
+    "over": "the words are over"
+  }
+}
