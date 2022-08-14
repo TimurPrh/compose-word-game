@@ -23,10 +23,10 @@ const DraggableItem = ({id, text, position, setPosition, solvedRight, solvedWron
         grid={[1, 1]}
         scale={1}
         onStop={handleStop}>
-        <div>
-          <div className={className}>{text}</div>
-        </div>
-      </Draggable>
+      <div>
+        <div className={className}>{text}</div>
+      </div>
+    </Draggable>
   );
 };
 

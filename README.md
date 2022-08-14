@@ -1,5 +1,5 @@
 # compose-word-game
-Игра, где нужно собрать слово
+A game where you need to compose the word. Dual language support: English and Russian.  
 
 ## Ссылки
-Страница проекта: [word-game.na4u.ru](http://word-game.na4u.ru/)
+Project page: [word-game.na4u.ru](http://word-game.na4u.ru/)
