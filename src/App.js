@@ -98,6 +98,8 @@ const App = () => {
   const resetWord = () => {
     setRandomLetters()
     setThrowPositions(true)
+    setSolvedWrong(false)
+    setSolvedRight(false)
   }
 
   useEffect(() => {
@@ -115,6 +117,8 @@ const App = () => {
       setRefs([])
       setLetters([])
       setMainWordText(mainWord.word[selectedLanguage])
+      setSolvedWrong(false)
+      setSolvedRight(false)
     }
   }, [selectedLanguage])
 
@@ -140,7 +144,7 @@ const App = () => {
         setSolvedWrong(true)
       }
     }
-  }, [letters, selectedLanguage])
+  }, [letters])
 
   return (
     <div className='container'>

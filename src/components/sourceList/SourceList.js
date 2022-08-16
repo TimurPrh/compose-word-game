@@ -82,16 +82,27 @@ const SourceList = ({letters, handleLetters, refs, throwPositions, solvedRight, 
   }, [])
 
   useEffect(() => {
+   if (throwPositions) {
+    const refsSemiCount = refs.length / 2
+    const newState = refs.map((ref, i) =>  i >= refsSemiCount)
+    setTakenRefs(newState)
+    
     setStatePositions([])
     for (let i = refs.length / 2; i < refs.length; i++) {
       setStatePositions(prev => [...prev, refs[i]])
     }
-  }, [refs, throwPositions])
+   }
+  }, [throwPositions])
 
   useEffect(() => {
     const refsSemiCount = refs.length / 2
     const newState = refs.map((ref, i) =>  i >= refsSemiCount)
     setTakenRefs(newState)
+    
+    setStatePositions([])
+    for (let i = refs.length / 2; i < refs.length; i++) {
+      setStatePositions(prev => [...prev, refs[i]])
+    }
   }, [refs])
 
   return (

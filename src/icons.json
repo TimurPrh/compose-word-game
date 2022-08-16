@@ -23,7 +23,7 @@
     {"file": "jump-svgrepo-com", "word": { "ru": "акула", "en": "shark" }},
     {"file": "kick-svgrepo-com", "word": { "ru": "мяч", "en": "ball" }},
     {"file": "launch-svgrepo-com", "word": { "ru": "ракета", "en": "rocket" }},
-    {"file": "live-svgrepo-com", "word": { "ru": "лист", "en": "sheet" }},
+    {"file": "live-svgrepo-com", "word": { "ru": "лист", "en": "leaf" }},
     {"file": "match-svgrepo-com", "word": { "ru": "носки", "en": "socks" }},
     {"file": "measure-svgrepo-com", "word": { "ru": "рулетка", "en": "ruler" }},
     {"file": "mill-svgrepo-com", "word": { "ru": "мельница", "en": "mill" }},
@@ -36,6 +36,6 @@
     {"file": "slice-svgrepo-com", "word": { "ru": "пицца", "en": "pizza" }},
     {"file": "snow-svgrepo-com", "word": { "ru": "снежинка", "en": "snow" }},
     {"file": "swim-svgrepo-com", "word": { "ru": "рыбка", "en": "fish" }},
-    {"file": "wait-svgrepo-com", "word": { "ru": "сейф", "en": "vault" }}
+    {"file": "turn-svgrepo-com", "word": { "ru": "сейф", "en": "vault" }}
   ]
 }
